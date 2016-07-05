@@ -1,5 +1,7 @@
 package fredrik.kindernote;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -218,6 +220,18 @@ public class AddNewChildActivity extends AppCompatActivity {
         }
 
         if(reqfieldsfilled){
+            KinderNoteDB db = new KinderNoteDB(this);
+            SQLiteDatabase database = db.getWritableDatabase();
+
+            ContentValues insertValues = new ContentValues();
+            insertValues.put("name", ((EditText) findViewById(R.id.newChildName)).getText().toString());
+            insertValues.put("personalnumber", ((EditText) findViewById(R.id.newChildNumber)).getText().toString());
+            String fused = ((EditText) findViewById(R.id.newChildDay)).getText().toString() +
+                    ((EditText) findViewById(R.id.newChildMonth)).getText().toString() +
+                    ((EditText) findViewById(R.id.newChildYear)).getText().toString();
+            insertValues.put("birthdate", fused);
+            database.insert("ChildInfo", null, insertValues);
+
             finish();
         }
     }

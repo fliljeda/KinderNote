@@ -1,6 +1,8 @@
 package fredrik.kindernote;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -70,5 +72,18 @@ public class StartingMenu extends AppCompatActivity {
     public void addNewChild(View view){
         Intent intent = new Intent(this, AddNewChildActivity.class);
         startActivity(intent);
+    }
+
+    public void testDB(View view){
+        SQLiteDatabase db = new KinderNoteDB(this).getReadableDatabase();
+        String[] columns = {"name", "personalnumber", "birthdate"};
+        Cursor cursor = db.query("ChildInfo", columns, "name = 'Fredrik'", null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String pno = "" + cursor.getCount();
+            if(pno != null && pno.length() > 0) {
+                ((Button) findViewById(R.id.dbTest)).setText(pno);
+            }
+        }
     }
 }
