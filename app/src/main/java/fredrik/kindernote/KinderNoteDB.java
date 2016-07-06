@@ -11,13 +11,23 @@ public class KinderNoteDB extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "KinderNoteDB";
     private static final int DATABASE_VERSION = 2;
 
-    private static final String CHILDINFO_NAME = "ChildInfo";
+    private static final String CHILDINFO_NAME = "child_basic_info";
     private static final String CHILDINFO_TABLE_CREATE =
             "CREATE TABLE " + CHILDINFO_NAME + " (" +
-                "name" + " TEXT NOT NULL, " +
+                "firstname" + " TEXT NOT NULL, " +
+                "lastname" + " TEXT NOT NULL, " +
                 "personalnumber" + " TEXT NOT NULL, " +
                 "birthdate" + " TEXT NOT NULL" +
                 ");";
+
+    private static final String PARENTINFO_NAME = "parent_info";
+    private static final String PARENTINFO_TABLE_CREATE =
+            "CREATE TABLE " + PARENTINFO_NAME + " (" +
+                    "childnumber" + " TEXT NOT NULL, " +
+                    "parentname" + " TEXT NOT NULL, " +
+                    "parentphone" + " TEXT NOT NULL, " +
+                    "comment" + " TEXT" +
+                    ");";
 
 
 
@@ -27,7 +37,9 @@ public class KinderNoteDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
+
         db.execSQL(CHILDINFO_TABLE_CREATE);
+        db.execSQL(PARENTINFO_TABLE_CREATE);
     }
 
     @Override

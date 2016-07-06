@@ -34,14 +34,28 @@
                 android:textSize="@dimen/parentDetail_text_size"
                 android:textStyle="bold"
                 android:text="Child Details"/>
-
-            <EditText
-                android:id="@+id/newChildName"
-                android:inputType="text"
-                android:maxLines="1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"/>
+                android:orientation="horizontal"
+                android:layout_weight="0">
+                <EditText
+                    android:id="@+id/newChildFirstName"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="First name"/>
+                <EditText
+                    android:id="@+id/newChildLastName"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Lastname"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,21 +69,24 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="Year"/>
+                    android:hint="Year"
+                    android:maxLength="4"/>
                 <EditText
                     android:id="@+id/newChildMonth"
                     android:inputType="number"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="Month"/>
+                    android:hint="Month"
+                    android:maxLength="2"/>
                 <EditText
                     android:id="@+id/newChildDay"
                     android:inputType="number"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="Day"/>
+                    android:hint="Day"
+                    android:maxLength="2"/>
             </LinearLayout>
 
             <EditText
@@ -78,7 +95,8 @@
                 android:maxLines="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Personal Number"/>
+                android:hint="Personal Number"
+                android:maxLength="10"/>
 
         </LinearLayout>
 

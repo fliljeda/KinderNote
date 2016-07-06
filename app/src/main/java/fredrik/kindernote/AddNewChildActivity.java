@@ -46,12 +46,15 @@ public class AddNewChildActivity extends AppCompatActivity {
         private AddNewChildActivity upperthis;
         int parentnumber;
         private ArrayList<Field> fields; //fields that are required
-
+        private EditText parentname;
+        private EditText parentphone;
+        private EditText comment;
 
         public Parent(AddNewChildActivity anca, int parentnumber){
             upperthis = anca;
             this.parentnumber = parentnumber;
             fields = new ArrayList<Field>();
+
             fixViews();
         }
 
@@ -77,20 +80,20 @@ public class AddNewChildActivity extends AppCompatActivity {
 
 
             //Name
-            EditText parentname = new EditText(upperthis);
+            parentname = new EditText(upperthis);
             parentname.setHint("Name");
             thisparent.addView(parentname);
             fields.add(new Field(parentname));
 
             //Phone number
-            EditText parentphone = new EditText(upperthis);
+            parentphone = new EditText(upperthis);
             parentphone.setHint("Phone Number");
             parentphone.setInputType(InputType.TYPE_CLASS_NUMBER);
             thisparent.addView(parentphone);
             fields.add(new Field(parentphone));
 
             //Comment field
-            EditText comment = new EditText(upperthis);
+            comment = new EditText(upperthis);
             comment.setHint("Comment");
             thisparent.addView(comment);
 
@@ -124,6 +127,9 @@ public class AddNewChildActivity extends AppCompatActivity {
         }
 
         public ArrayList<Field> getFields(){return fields;}
+        public EditText getParentname(){return parentname;}
+        public EditText getParentphone(){return parentphone;}
+        public EditText getComment(){return comment;}
     }
 
     /**
@@ -181,9 +187,12 @@ public class AddNewChildActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Adds the basic required fields to an array manually
+     */
     private void addFields(){
-
-        fields.add(new Field((EditText) findViewById(R.id.newChildName)));
+        fields.add(new Field((EditText) findViewById(R.id.newChildLastName)));
+        fields.add(new Field((EditText) findViewById(R.id.newChildFirstName)));
         fields.add(new Field((EditText) findViewById(R.id.newChildYear)));
         fields.add(new Field((EditText) findViewById(R.id.newChildMonth)));
         fields.add(new Field((EditText) findViewById(R.id.newChildDay)));
@@ -220,20 +229,89 @@ public class AddNewChildActivity extends AppCompatActivity {
         }
 
         if(reqfieldsfilled){
-            KinderNoteDB db = new KinderNoteDB(this);
-            SQLiteDatabase database = db.getWritableDatabase();
-
-            ContentValues insertValues = new ContentValues();
-            insertValues.put("name", ((EditText) findViewById(R.id.newChildName)).getText().toString());
-            insertValues.put("personalnumber", ((EditText) findViewById(R.id.newChildNumber)).getText().toString());
-            String fused = ((EditText) findViewById(R.id.newChildDay)).getText().toString() +
-                    ((EditText) findViewById(R.id.newChildMonth)).getText().toString() +
-                    ((EditText) findViewById(R.id.newChildYear)).getText().toString();
-            insertValues.put("birthdate", fused);
-            database.insert("ChildInfo", null, insertValues);
-
+            addChildToDb();
+            addParentsToDb();
             finish();
         }
+    }
+
+    /**
+     * Adds parents to the designated dbtable
+     */
+    public void addParentsToDb(){
+        KinderNoteDB db = new KinderNoteDB(this);
+        SQLiteDatabase database = db.getWritableDatabase();
+
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("childnumber", ((EditText) findViewById(R.id.newChildNumber)).getText().toString());
+        insertValues.put("parentname", ((EditText) findViewById(R.id.newParentName)).getText().toString());
+        insertValues.put("parentphone", ((EditText) findViewById(R.id.newParentPhone)).getText().toString());
+        insertValues.put("comment", ((EditText) findViewById(R.id.newParentComment)).getText().toString());
+        database.insert("parent_info", null, insertValues);
+
+        //Adding the additional parents to the database
+        for(Parent parent: parents){
+            insertValues = new ContentValues();
+            insertValues.put("childnumber", ((EditText) findViewById(R.id.newChildNumber)).getText().toString());
+            insertValues.put("parentname", parent.getParentname().getText().toString());
+            insertValues.put("parentphone", parent.getParentphone().getText().toString());
+            insertValues.put("comment", parent.getComment().getText().toString());
+            database.insert("parent_info", null, insertValues);
+        }
+
+    }
+
+    /**
+     * Adds the child to the designated dbtable
+     */
+    public void addChildToDb(){
+        KinderNoteDB db = new KinderNoteDB(this);
+        SQLiteDatabase database = db.getWritableDatabase();
+
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("firstname", ((EditText) findViewById(R.id.newChildFirstName)).getText().toString());
+
+        insertValues.put("lastname", ((EditText) findViewById(R.id.newChildLastName)).getText().toString());
+
+        String year = fixDate(((EditText) findViewById(R.id.newChildYear)).getText().toString(),
+                ((EditText) findViewById(R.id.newChildMonth)).getText().toString(),
+                ((EditText) findViewById(R.id.newChildDay)).getText().toString());
+        insertValues.put("birthdate", year);
+
+        insertValues.put("personalnumber", ((EditText) findViewById(R.id.newChildNumber)).getText().toString());
+        database.insert("child_basic_info", null, insertValues);
+    }
+
+    /**
+     * Returns an appropriate string of the date that the database will use
+     * Any year that differs from normal ways will be put at year 1900 for easy clearing
+     * of database
+     */
+    private String fixDate(String year, String month, String day){
+        switch(year.length()){
+            case 1:
+                year = "1900";
+                break;
+            case 3:
+                year = "1900";
+                break;
+            case 4:
+                year = year.substring(2,3);
+                break;
+        }
+
+        switch(month.length()){
+            case 1:
+                month = "0" + month;
+                break;
+        }
+
+        switch(day.length()){
+            case 1:
+                day = "0" + day;
+                break;
+        }
+        return year + month + day;
     }
 
     /**

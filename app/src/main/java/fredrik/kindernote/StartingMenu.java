@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -76,14 +79,27 @@ public class StartingMenu extends AppCompatActivity {
 
     public void testDB(View view){
         SQLiteDatabase db = new KinderNoteDB(this).getReadableDatabase();
-        String[] columns = {"name", "personalnumber", "birthdate"};
-        Cursor cursor = db.query("ChildInfo", columns, "name = 'Fredrik'", null, null, null, null);
+        String[] columns = {"parentname", "parentphone", "comment"};
+        Cursor cursor = db.query("parent_info", columns, "childnumber = '9406194713'", null, null, null, null);
         if (cursor != null) {
+            //cursor.moveToFirst();
+            //String pno = "" + cursor.getCount();
+            //if(pno != null && pno.length() > 0) {
+            //    ((Button) findViewById(R.id.dbTest)).setText(pno);
+            //}
             cursor.moveToFirst();
-            String pno = "" + cursor.getCount();
-            if(pno != null && pno.length() > 0) {
-                ((Button) findViewById(R.id.dbTest)).setText(pno);
+
+            if(cursor.getCount()> 0) {
+                do {
+                    TextView tv = (TextView) findViewById(R.id.tester);
+                    tv.setText(tv.getText().toString() + "\n" + cursor.getString(0));
+
+                } while (cursor.moveToNext());
             }
         }
+    }
+
+    public void dropDB(View view){
+        this.deleteDatabase("KinderNoteDB");
     }
 }
