@@ -4,4 +4,5 @@
     <string name="open_daily_pad">Open Daily Pad</string>
     <string name="button_add_child">Add New Child</string>
     <string name="title_activity_add_new_child">AddNewChildActivity</string>
+    <string name="title_activity_note_table">NoteTable</string>
 </resources>

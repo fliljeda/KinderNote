@@ -5,4 +5,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="addChild_vertical_margin">10dp</dimen>
     <dimen name="parentDetail_text_size">20dp</dimen>
+    <integer name="notetable_ordernumber_weight">1</integer>
+    <integer name="notetable_name_weight">2</integer>
+    <integer name="notetable_personnumber_weight">2</integer>
+    <integer name="notetable_presence_weight">2</integer>
+    <integer name="notetable_comment_weight">3</integer>
+    <integer name="notetable_day_weight">3</integer>
+    <dimen name="notetable_column_textsize">18dp</dimen>
 </resources>

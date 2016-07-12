@@ -55,13 +55,13 @@ public class StartingMenu extends AppCompatActivity {
     public void openDailyPad(View view){
         //Intent intent = new Intent(this, );
 
-        //Creating a new string with the format YYYYMMDD
+        //Creating a new string with the format yyMMdd, example: 160619 for the 19 june 2016
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMdd");
         String date = dateFormat.format(c.getTime()).toString();
 
         Button button = (Button) findViewById(R.id.button);
-
+        /*
         if(pressed) {
             button.setText(getString(R.string.open_daily_pad));
             pressed = false;
@@ -69,6 +69,10 @@ public class StartingMenu extends AppCompatActivity {
             button.setText(date);
             pressed = true;
         }
+        */
+        Intent intent = new Intent(this, NoteTable.class);
+        intent.putExtra("Date", date);
+        startActivity(intent);
     }
 
     //Opens the activity to add a new child
