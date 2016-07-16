@@ -16,7 +16,7 @@ public class KinderNoteDB extends SQLiteOpenHelper {
             "CREATE TABLE " + CHILDINFO_NAME + " (" +
                 "firstname" + " TEXT NOT NULL, " +
                 "lastname" + " TEXT NOT NULL, " +
-                "personalnumber" + " TEXT NOT NULL, " +
+                "personalnumber" + " TEXT NOT NULL UNIQUE, " +
                 "birthdate" + " TEXT NOT NULL" +
                 ");";
 
@@ -26,7 +26,17 @@ public class KinderNoteDB extends SQLiteOpenHelper {
                     "childnumber" + " TEXT NOT NULL, " +
                     "parentname" + " TEXT NOT NULL, " +
                     "parentphone" + " TEXT NOT NULL, " +
-                    "comment" + " TEXT" +
+                    "comment" + " TEXT NOT NULL" +
+                    ");";
+
+    private static final String DAILYNOTES_TABLE_NAME = "daily_notes";
+    private static final String DAILYNOTES_TABLE_CREATE =
+            "CREATE TABLE " + DAILYNOTES_TABLE_NAME + " (" +
+                    "personalnumber" + " TEXT NOT NULL, " +
+                    "date" + " TEXT NOT NULL, " +
+                    "presence" + " TEXT NOT NULL, " +
+                    "comment" + " TEXT NOT NULL, " +
+                    "dayinshort" + " TEXT NOT NULL" +
                     ");";
 
 
@@ -40,6 +50,7 @@ public class KinderNoteDB extends SQLiteOpenHelper {
 
         db.execSQL(CHILDINFO_TABLE_CREATE);
         db.execSQL(PARENTINFO_TABLE_CREATE);
+        db.execSQL(DAILYNOTES_TABLE_CREATE);
     }
 
     @Override
