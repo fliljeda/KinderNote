@@ -5,4 +5,5 @@
     <string name="button_add_child">Add New Child</string>
     <string name="title_activity_add_new_child">AddNewChildActivity</string>
     <string name="title_activity_note_table">NoteTable</string>
+    <string name="title_activity_display_child">displayChild</string>
 </resources>

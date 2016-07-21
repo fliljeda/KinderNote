@@ -36,6 +36,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fredrik.kindernote.StartingMenu" />
         </activity>
+        <activity
+            android:name=".DisplayChild"
+            android:label="@string/title_activity_display_child"
+            android:parentActivityName=".NoteTable"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="fredrik.kindernote.NoteTable" />
+        </activity>
     </application>
 
 </manifest>
