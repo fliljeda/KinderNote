@@ -296,7 +296,7 @@ public class AddNewChildActivity extends AppCompatActivity {
                 year = "1900";
                 break;
             case 4:
-                year = year.substring(2,3);
+                year = year.substring(2,4);
                 break;
         }
 
