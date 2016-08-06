@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">KinderNote</string>
     <string name="action_settings">Settings</string>
-    <string name="open_daily_pad">Open Daily Pad</string>
+    <string name="open_daily_pad">Current Pad</string>
     <string name="button_add_child">Add New Child</string>
+    <string name="open_pad">Open</string>
+    <string name="button_remove_child">Remove Child</string>
     <string name="title_activity_add_new_child">AddNewChildActivity</string>
     <string name="title_activity_note_table">NoteTable</string>
     <string name="title_activity_display_child">displayChild</string>

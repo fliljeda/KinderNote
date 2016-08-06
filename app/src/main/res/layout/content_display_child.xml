@@ -12,6 +12,7 @@
     tools:context="fredrik.kindernote.DisplayChild"
     tools:showIn="@layout/activity_display_child">
     <LinearLayout
+        android:id="@+id/infoholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

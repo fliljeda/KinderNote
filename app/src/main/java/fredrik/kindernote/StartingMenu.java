@@ -1,17 +1,20 @@
 package fredrik.kindernote;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -75,32 +78,65 @@ public class StartingMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openPad(View view){
+        String year = ((EditText) findViewById(R.id.startmenu_year)).getText().toString();
+        String month = ((EditText) findViewById(R.id.startmenu_month)).getText().toString();
+        String day = ((EditText) findViewById(R.id.startmenu_day)).getText().toString();
+        String date;
+        if(!(date = createDateFormat(year, month, day)).equals("err")){
+            Intent intent = new Intent(this, NoteTable.class);
+            intent.putExtra("Date", date);
+            startActivity(intent);
+        }else{
+            AlertDialog alertDialog = new AlertDialog.Builder(StartingMenu.this).create();
+            alertDialog.setTitle("Can't open log:");
+            alertDialog.setMessage("Wrong Date Format");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private String createDateFormat(String year, String month, String day){
+        String err = "err";
+        int yearlength = year.length();
+        if(yearlength != 2 && yearlength != 4){
+            return err;
+        }else if(month.length() == 0 || month.length() > 12){
+            return err;
+        }else if(day.length() == 0 || day.length() > 31){
+            return err;
+        }
+        if(year.length() == 4){
+            year = year.substring(2,4);
+        }
+        if(month.length() == 1){
+            month = "0" + month;
+        }
+        if(day.length() == 1){
+            day = "0" + day;
+        }
+        return year + month + day;
+    }
+
     //Opens the activity to add a new child
     public void addNewChild(View view){
         Intent intent = new Intent(this, AddNewChildActivity.class);
         startActivity(intent);
     }
 
-    public void testDB(View view){
-        SQLiteDatabase db = new KinderNoteDB(this).getReadableDatabase();
-        String[] columns = {"parentname", "parentphone", "comment"};
-        Cursor cursor = db.query("parent_info", columns, "childnumber = '9406194713'", null, null, null, null);
-        if (cursor != null) {
-            //cursor.moveToFirst();
-            //String pno = "" + cursor.getCount();
-            //if(pno != null && pno.length() > 0) {
-            //    ((Button) findViewById(R.id.dbTest)).setText(pno);
-            //}
-            cursor.moveToFirst();
 
-            if(cursor.getCount()> 0) {
-                do {
-                    TextView tv = (TextView) findViewById(R.id.tester);
-                    tv.setText(tv.getText().toString() + "\n" + cursor.getString(0));
+    /**
+     * Opens remove child activity
+     */
+    public void removeChild(View view){
+        Intent intent = new Intent(this, RemoveChild.class);
+        startActivity(intent);
 
-                } while (cursor.moveToNext());
-            }
-        }
     }
 
     public void dropDB(View view){

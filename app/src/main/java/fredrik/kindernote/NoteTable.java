@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -33,6 +34,16 @@ public class NoteTable extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setupNotes();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void setupNotes(){
@@ -206,6 +217,10 @@ public class NoteTable extends AppCompatActivity {
         noteholder.addView(thisnote);
 
         orderofcurrentchild++;
+    }
+
+    public void goBack(View view){
+        finish();
     }
 
 

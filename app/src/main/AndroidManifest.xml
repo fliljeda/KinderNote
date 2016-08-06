@@ -45,6 +45,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="fredrik.kindernote.NoteTable" />
         </activity>
+        <activity android:name=".RemoveChild"></activity>
     </application>
 
 </manifest>
